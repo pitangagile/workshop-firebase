@@ -1,0 +1,12 @@
+curl -H "Content-Type: application/json" \
+     -H "Authorization: key=AAAAZAdM_3A:APA91bESxihQf8n5mZ73q-7TAQihVZcBk7rMTJPcHT6hwKZly-43GbuY0MBf2UEEqiS-_6_dD11OoOBXoJq0CqAVWZyynhuEebaCLIhMb7lYzURwsF9Dq-tUR503CCpvLFQltPi4bbjG" \
+     -d '{
+           "notification": {
+             "title": "Novo despacho!",
+             "body": "Você tem um novo despacho disponível para visualização",
+             "icon": "/images/profile_placeholder.png",
+             "click_action": "http://localhost:5000"
+           },
+           "to": "cX_cQ-jk3iSwOfiQZdaRPq:APA91bFEHWjfo1YgwhSER3yOI_YjRiMyFn5-grVNey8isb1YMAAqsLiLo8craerWU6K-IzlrLRk0A7WlWNhTohqdHrGuZ5NSikzOLAW78NBLNUgn_WpJW_0lnktEgGuJ8oJBD4hf7xvp"
+         }' \
+     https://fcm.googleapis.com/fcm/send

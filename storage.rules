@@ -1,0 +1,6 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    //regras de segurança do cloud storage https://firebase.google.com/docs/storage/security?hl=pt-br
+  }
+}

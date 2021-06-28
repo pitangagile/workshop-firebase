@@ -1,0 +1,7 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    //regras de segurança do firestore: https://firebase.google.com/docs/firestore/security/get-started?hl=pt-br
+  }
+}
