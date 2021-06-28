@@ -4,6 +4,9 @@
 ////////////////// AUTENTICACAO /////////////////////////////
 /////////////////////////////////////////////////////////////
 
+//exemplos firestore: https://firebase.google.com/docs/firestore/quickstart?hl=pt-br
+//exemplo de login com o google: https://firebase.google.com/docs/auth/web/google-signin?hl=pt-br
+
 // login
 function signIn() {
   // login no firebase usando google como identity provider

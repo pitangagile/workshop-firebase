@@ -4,7 +4,10 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const db = admin.firestore();
 
+//exemplos firestore: https://firebase.google.com/docs/firestore/quickstart?hl=pt-br
+
 //notifica usuário quando um novo despacho é criado pela primeira vez. Esta função é ativada quando um novo despacho é inserido no Firestore.
+//exemplo gatilhos cloud functions https://firebase.google.com/docs/functions/firestore-events
 exports.notify = //sua funcao aqui
 
 
