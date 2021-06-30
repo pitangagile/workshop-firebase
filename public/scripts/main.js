@@ -10,16 +10,20 @@
 // login
 function signIn() {
   // login no firebase usando google como identity provider
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider);
 }
 
 // logout da aplicacao
 function signOut() {
   // logout do firebase
+  firebase.auth().signOut();
 }
 
 // funcao para configurar autenticador do firebase
 function initFirebaseAuth() {
   // registrando funcao de callback para observar mudanca de estado da autenticacao
+  firebase.auth().onAuthStateChanged(authStateObserver);
 }
 
 // Dispara quando o estado da autenticacao eh modificado (login/logout)
@@ -54,6 +58,7 @@ function authStateObserver(user) {
     signOutButtonElement.setAttribute('hidden', 'true');
 
     // Apaga dados de despachos da tabela caso existam
+    eraseDataFromTable();
 
     // Mostra botao de login
     signInButtonElement.removeAttribute('hidden');
@@ -70,19 +75,19 @@ function authStateObserver(user) {
 /////////////////////////////////////////////////////////////
 // recupera imagem do usuario autenticado
 function getProfilePicUrl() {
-
+  return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
 }
 
 // recupera nome do usuario autenticado 
 function getUserName() {
-
+  return firebase.auth().currentUser.displayName;
 }
 
 
 // recupera uid do usuario autenticado
 function getUid() {
   try {
-
+    return firebase.auth().currentUser.uid;
   } catch (error) {
     return null;
   }
@@ -90,7 +95,7 @@ function getUid() {
 
 // retorna verdadeiro caso o usuario esteja autenticado
 function isUserSignedIn() {
-  
+  return !!firebase.auth().currentUser;
 }
 
 /////////////////////////////////////////////////////////////
@@ -102,13 +107,27 @@ function isUserSignedIn() {
 // carrega historico de despachos e escuta novos despachos cadastrados.
 function loadDispatches() {
   // query para listar despachos
+  var query = firebase.firestore()
+                  .collection('despachos')
+                  .where('responsavel', '==', getUid())
+                  // .orderBy('timestamp', 'desc')
+                  // .limit(1);
   
   // query para escutar collection de despachos
+  query.onSnapshot(function(snapshot) {
+    snapshot.docChanges().forEach(function(change) {
+      if (change.type === 'removed') {
+        deleteDispatch(change.doc.id);
+      } else {
+        var dispatch = change.doc.data();
+        displayDispatch(change.doc.id, dispatch.citado, dispatch.status, dispatch.endereco, dispatch.foto_comprovacao);
+      }
+    });
+  });
 }
 
 // Salva imagem de comprovacao do despacho
 function saveDispatchImage(file) {
-
   
 }
 
