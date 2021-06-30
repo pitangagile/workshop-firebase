@@ -128,7 +128,24 @@ function loadDispatches() {
 
 // Salva imagem de comprovacao do despacho
 function saveDispatchImage(file) {
+
+  var filePath = selectedElement + '/' + file.name;
   
+  firebase.storage().ref(filePath).put(file).then(function(fileSnapshot) {
+    // Gera url publica pra o arquivo.
+    return fileSnapshot.ref.getDownloadURL().then((url) => {
+      firebase.firestore().collection('despachos').doc(selectedElement)
+          .update({
+            foto_comprovacao: url,
+            foto_comprovacao_storage_uri: fileSnapshot.metadata.fullPath,
+            status: 'ENTREGUE'
+          }).then(res => {
+            alert('Documento anexado com sucesso');
+          });
+    });
+  }).catch(function(error) {
+      console.error('There was an error uploading a file to Cloud Storage:', error);
+    });
 }
 
 // Salva usuario e token 
